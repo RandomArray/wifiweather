@@ -1,0 +1,44 @@
+#!/bin/bash
+IFS=$'\n'
+
+# Remove APs
+max=8
+
+# Remove 1 to start at zero
+max=$((max-1))
+
+# Remove APs
+for i in `seq 0 $max`
+do
+    /usr/bin/wifisetup remove -ap > /dev/null
+    /usr/bin/wifisetup remove -ap > /dev/null
+done
+
+uci commit
+
+readarray -t lines <<< "$(/usr/bin/php-cli -f /root/getweather.php)"
+
+for (( i=0; i<${#lines[@]}; i++ ));
+do
+    # Current AP number
+    curnum=$((i+1))
+
+    # Ouput status
+    echo "Setting AP #$curnum Name: ${lines[i]}"
+
+    # Set new WIFI SSID on OnionOmega / OpenWRT
+    uci add wireless wifi-iface
+    uci set wireless.@wifi-iface[-1].device=radio0
+    uci set wireless.@wifi-iface[-1].mode=ap
+    uci set wireless.@wifi-iface[-1].ssid="${lines[i]}"
+    uci set wireless.@wifi-iface[-1].key="$pass"
+    uci set wireless.@wifi-iface[-1].encryption=psk2
+    uci set wireless.@wifi-iface[-1].network=wlan
+
+done
+
+#uci set wireless.@wifi-iface[0].disabled=0
+
+uci commit ; wifi
+
+
