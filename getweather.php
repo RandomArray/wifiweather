@@ -1,6 +1,6 @@
 <?php
 
-// URL to San Diego, Brown Field
+// URL to San Diego, Montgomery-Gibbs Executive Airport
 $url = 'http://w1.weather.gov/xml/current_obs/KMYF.xml';
 
 // Get XML Data, Convert to array
