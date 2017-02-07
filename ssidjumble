@@ -1,5 +1,6 @@
 #!/bin/bash
 IFS=$'\n'
+pass="yourwifiAPpassword"
 
 # Remove APs
 max=8
