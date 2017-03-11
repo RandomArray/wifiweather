@@ -21,3 +21,6 @@ SSID: >> Visibility: 2.00 MI
 SSID: >> Relative Humidity: 93%
 ```
         
+# Requirements
+You'll need `php7-cli`, `bash`, `php7-mod-curl`, `php7-mod-simplexml`, `php7-mod-json` to run ssidjumble.
+opkg can easily install these.
